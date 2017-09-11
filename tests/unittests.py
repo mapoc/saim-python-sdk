@@ -2,7 +2,7 @@ import json
 import unittest
 import urllib.error
 import urllib.request
-
+import pprint
 
 base_url = 'https://apisb.shop.com/saim/v1'
 api_key = 'your-api-key-here'
@@ -45,6 +45,9 @@ class TestHouseholds(unittest.TestCase):
 
         resp, resp_code = get_response(req)
         resp = json.loads(resp.read().decode())
+
+        print("Printing response information")
+        pprint.pprint(resp)
 
         # this allows a global override of the household id so that all the other methods
         # can use this variable
