@@ -11,15 +11,6 @@ api_key = 'your-api-key-here'
 household_id = '1001'
 
 
-def get_response(req):
-    try:
-        resp = urllib.request.urlopen(req)
-    except urllib.error.URLError as e:
-        resp = e
-
-    return resp, resp.getcode()
-
-
 class TestHouseholds(unittest.TestCase):
     #
     # expected successes
@@ -43,18 +34,22 @@ class TestHouseholds(unittest.TestCase):
                                      headers=req_headers,
                                      method='POST')
 
-        resp, resp_code = get_response(req)
+        try:
+            resp = urllib.request.urlopen(req)
+        except urllib.error.URLError as e:
+            resp = e
+
         resp = json.loads(resp.read().decode())
 
         print("Printing response information")
         pprint.pprint(resp)
 
+        self.assertEqual(resp.getcode(), 201)
+
         # this allows a global override of the household id so that all the other methods
         # can use this variable
         global household_id
         household_id = resp['id']
-
-        self.assertEqual(resp_code, 201)
 
     def test_get_households(self):
         req_headers = {'api_key': api_key}
@@ -62,8 +57,12 @@ class TestHouseholds(unittest.TestCase):
                                      headers=req_headers,
                                      method='GET')
 
-        resp, resp_code = get_response(req)
-        self.assertEqual(resp_code, 200)
+        try:
+            resp = urllib.request.urlopen(req)
+        except urllib.error.URLError as e:
+            resp = e
+
+        self.assertEqual(resp.getcode(), 200)
 
     def test_put_households(self):
         req_body = {
@@ -81,8 +80,12 @@ class TestHouseholds(unittest.TestCase):
                                      headers=req_headers,
                                      method='PUT')
 
-        resp, resp_code = get_response(req)
-        self.assertEqual(resp_code, 200)
+        try:
+            resp = urllib.request.urlopen(req)
+        except urllib.error.URLError as e:
+            resp = e
+
+        self.assertEqual(resp.getcode(), 200)
 
     def test_put_households_subset(self):
         req_body = {
@@ -97,8 +100,12 @@ class TestHouseholds(unittest.TestCase):
                                      headers=req_headers,
                                      method='PUT')
 
-        resp, resp_code = get_response(req)
-        self.assertEqual(resp_code, 200)
+        try:
+            resp = urllib.request.urlopen(req)
+        except urllib.error.URLError as e:
+            resp = e
+
+        self.assertEqual(resp.getcode(), 200)
 
     #
     # expected failures
@@ -118,8 +125,12 @@ class TestHouseholds(unittest.TestCase):
                                      headers=req_headers,
                                      method='POST')
 
-        resp, resp_code = get_response(req)
-        self.assertEqual(resp_code, 400)
+        try:
+            resp = urllib.request.urlopen(req)
+        except urllib.error.URLError as e:
+            resp = e
+
+        self.assertEqual(resp.getcode(), 400)
 
     def test_get_households_invalid_household_id(self):
         req_headers = {'api_key': api_key}
@@ -127,8 +138,12 @@ class TestHouseholds(unittest.TestCase):
                                      headers=req_headers,
                                      method='GET')
 
-        resp, resp_code = get_response(req)
-        self.assertEqual(resp_code, 401)
+        try:
+            resp = urllib.request.urlopen(req)
+        except urllib.error.URLError as e:
+            resp = e
+
+        self.assertEqual(resp.getcode(), 401)
 
     def test_put_households_invalid_email(self):
         req_body = {
@@ -143,8 +158,12 @@ class TestHouseholds(unittest.TestCase):
                                      data=req_json,
                                      headers=req_headers,
                                      method='PUT')
-        resp, resp_code = get_response(req)
-        self.assertEqual(resp_code, 400)
+        try:
+            resp = urllib.request.urlopen(req)
+        except urllib.error.URLError as e:
+            resp = e
+
+        self.assertEqual(resp.getcode(), 400)
 
 
 class TestHouseholdsLists(unittest.TestCase):
@@ -157,8 +176,12 @@ class TestHouseholdsLists(unittest.TestCase):
                                      headers=req_headers,
                                      method='GET')
 
-        resp, resp_code = get_response(req)
-        self.assertEqual(resp_code, 200)
+        try:
+            resp = urllib.request.urlopen(req)
+        except urllib.error.URLError as e:
+            resp = e
+
+        self.assertEqual(resp.getcode(), 200)
 
     #
     # expected failures
@@ -169,8 +192,12 @@ class TestHouseholdsLists(unittest.TestCase):
                                      headers=req_headers,
                                      method='GET')
 
-        resp, resp_code = get_response(req)
-        self.assertEqual(resp_code, 401)
+        try:
+            resp = urllib.request.urlopen(req)
+        except urllib.error.URLError as e:
+            resp = e
+
+        self.assertEqual(resp.getcode(), 401)
 
 
 class TestHouseholdsStockLists(unittest.TestCase):
@@ -200,8 +227,12 @@ class TestHouseholdsStockLists(unittest.TestCase):
                                      headers=req_headers,
                                      method='POST')
 
-        resp, resp_code = get_response(req)
-        self.assertEqual(resp_code, 200)
+        try:
+            resp = urllib.request.urlopen(req)
+        except urllib.error.URLError as e:
+            resp = e
+
+        self.assertEqual(resp.getcode(), 200)
 
     def test_get_households_stock_list(self):
         req_headers = {'api_key': api_key}
@@ -209,8 +240,12 @@ class TestHouseholdsStockLists(unittest.TestCase):
                                      headers=req_headers,
                                      method='GET')
 
-        resp, resp_code = get_response(req)
-        self.assertEqual(resp_code, 200)
+        try:
+            resp = urllib.request.urlopen(req)
+        except urllib.error.URLError as e:
+            resp = e
+
+        self.assertEqual(resp.getcode(), 200)
 
     def test_get_households_stock_list_2(self):
         req_headers = {'api_key': api_key}
@@ -218,8 +253,12 @@ class TestHouseholdsStockLists(unittest.TestCase):
                                      headers=req_headers,
                                      method='GET')
 
-        resp, resp_code = get_response(req)
-        self.assertEqual(resp_code, 200)
+        try:
+            resp = urllib.request.urlopen(req)
+        except urllib.error.URLError as e:
+            resp = e
+
+        self.assertEqual(resp.getcode(), 200)
 
     #
     # expected failures
@@ -247,8 +286,12 @@ class TestHouseholdsStockLists(unittest.TestCase):
                                      headers=req_headers,
                                      method='POST')
 
-        resp, resp_code = get_response(req)
-        self.assertEqual(resp_code, 404)
+        try:
+            resp = urllib.request.urlopen(req)
+        except urllib.error.URLError as e:
+            resp = e
+
+        self.assertEqual(resp.getcode(), 404)
 
     def test_post_households_stock_list_empty_min_on_hand(self):
         req_body = [
@@ -271,8 +314,12 @@ class TestHouseholdsStockLists(unittest.TestCase):
                                      headers=req_headers,
                                      method='POST')
 
-        resp, resp_code = get_response(req)
-        self.assertEqual(resp_code, 400)
+        try:
+            resp = urllib.request.urlopen(req)
+        except urllib.error.URLError as e:
+            resp = e
+
+        self.assertEqual(resp.getcode(), 400)
 
     def test_get_households_stock_list_invalid_household_id(self):
         req_headers = {'api_key': api_key}
@@ -280,8 +327,12 @@ class TestHouseholdsStockLists(unittest.TestCase):
                                      headers=req_headers,
                                      method='GET')
 
-        resp, resp_code = get_response(req)
-        self.assertEqual(resp_code, 401)
+        try:
+            resp = urllib.request.urlopen(req)
+        except urllib.error.URLError as e:
+            resp = e
+
+        self.assertEqual(resp.getcode(), 401)
 
 
 class TestHouseholdsStock(unittest.TestCase):
@@ -294,8 +345,12 @@ class TestHouseholdsStock(unittest.TestCase):
                                      headers=req_headers,
                                      method='GET')
 
-        resp, resp_code = get_response(req)
-        self.assertEqual(resp_code, 200)
+        try:
+            resp = urllib.request.urlopen(req)
+        except urllib.error.URLError as e:
+            resp = e
+
+        self.assertEqual(resp.getcode(), 200)
 
     def test_put_households_stock(self):
         req_body = {
@@ -311,8 +366,12 @@ class TestHouseholdsStock(unittest.TestCase):
                                      headers=req_headers,
                                      method='PUT')
 
-        resp, resp_code = get_response(req)
-        self.assertEqual(resp_code, 200)
+        try:
+            resp = urllib.request.urlopen(req)
+        except urllib.error.URLError as e:
+            resp = e
+
+        self.assertEqual(resp.getcode(), 200)
 
     def test_put_households_stock_subset(self):
         req_body = {
@@ -327,8 +386,12 @@ class TestHouseholdsStock(unittest.TestCase):
                                      headers=req_headers,
                                      method='PUT')
 
-        resp, resp_code = get_response(req)
-        self.assertEqual(resp_code, 200)
+        try:
+            resp = urllib.request.urlopen(req)
+        except urllib.error.URLError as e:
+            resp = e
+
+        self.assertEqual(resp.getcode(), 200)
 
     def test_delete_households_stock(self):
         req_headers = {'api_key': api_key}
@@ -336,8 +399,12 @@ class TestHouseholdsStock(unittest.TestCase):
                                      headers=req_headers,
                                      method='DELETE')
 
-        resp, resp_code = get_response(req)
-        self.assertEqual(resp_code, 200)
+        try:
+            resp = urllib.request.urlopen(req)
+        except urllib.error.URLError as e:
+            resp = e
+
+        self.assertEqual(resp.getcode(), 200)
 
     #
     # expected failures
@@ -348,8 +415,12 @@ class TestHouseholdsStock(unittest.TestCase):
                                      headers=req_headers,
                                      method='GET')
 
-        resp, resp_code = get_response(req)
-        self.assertEqual(resp_code, 404)
+        try:
+            resp = urllib.request.urlopen(req)
+        except urllib.error.URLError as e:
+            resp = e
+
+        self.assertEqual(resp.getcode(), 404)
 
 
 class TestHouseholdsTransactions(unittest.TestCase):
@@ -369,8 +440,12 @@ class TestHouseholdsTransactions(unittest.TestCase):
                                      headers=req_headers,
                                      method='POST')
 
-        resp, resp_code = get_response(req)
-        self.assertEqual(resp_code, 200)
+        try:
+            resp = urllib.request.urlopen(req)
+        except urllib.error.URLError as e:
+            resp = e
+
+        self.assertEqual(resp.getcode(), 200)
 
     def test_get_households_transactions(self):
         req_headers = {'api_key': api_key}
@@ -378,8 +453,12 @@ class TestHouseholdsTransactions(unittest.TestCase):
                                      headers=req_headers,
                                      method='GET')
 
-        resp, resp_code = get_response(req)
-        self.assertEqual(resp_code, 200)
+        try:
+            resp = urllib.request.urlopen(req)
+        except urllib.error.URLError as e:
+            resp = e
+
+        self.assertEqual(resp.getcode(), 200)
 
     #
     # expected failures
@@ -397,8 +476,12 @@ class TestHouseholdsTransactions(unittest.TestCase):
                                      headers=req_headers,
                                      method='POST')
 
-        resp, resp_code = get_response(req)
-        self.assertEqual(resp_code, 422)
+        try:
+            resp = urllib.request.urlopen(req)
+        except urllib.error.URLError as e:
+            resp = e
+
+        self.assertEqual(resp.getcode(), 422)
 
     def test_post_households_transactions_missing_type(self):
         req_body = {
@@ -412,8 +495,12 @@ class TestHouseholdsTransactions(unittest.TestCase):
                                      headers=req_headers,
                                      method='POST')
 
-        resp, resp_code = get_response(req)
-        self.assertEqual(resp_code, 400)
+        try:
+            resp = urllib.request.urlopen(req)
+        except urllib.error.URLError as e:
+            resp = e
+
+        self.assertEqual(resp.getcode(), 400)
 
 
 class TestProducts(unittest.TestCase):
@@ -426,8 +513,12 @@ class TestProducts(unittest.TestCase):
                                      headers=req_headers,
                                      method='GET')
 
-        resp, resp_code = get_response(req)
-        self.assertEqual(resp_code, 200)
+        try:
+            resp = urllib.request.urlopen(req)
+        except urllib.error.URLError as e:
+            resp = e
+
+        self.assertEqual(resp.getcode(), 200)
 
     def test_get_products_item(self):
         req_headers = {'api_key': api_key}
@@ -435,8 +526,12 @@ class TestProducts(unittest.TestCase):
                                      headers=req_headers,
                                      method='GET')
 
-        resp, resp_code = get_response(req)
-        self.assertEqual(resp_code, 200)
+        try:
+            resp = urllib.request.urlopen(req)
+        except urllib.error.URLError as e:
+            resp = e
+
+        self.assertEqual(resp.getcode(), 200)
 
     #
     # expected failures
@@ -451,8 +546,12 @@ class TestProducts(unittest.TestCase):
                                      headers=req_headers,
                                      method='GET')
 
-        resp, resp_code = get_response(req)
-        self.assertEqual(resp_code, 400)
+        try:
+            resp = urllib.request.urlopen(req)
+        except urllib.error.URLError as e:
+            resp = e
+
+        self.assertEqual(resp.getcode(), 400)
 
 if __name__ == '__main__':
     # there's a bug because failures happen when they shouldn't when doing the run_all but not if the tests
